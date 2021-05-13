@@ -24,7 +24,7 @@ public class ServletOrders extends HttpServlet {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/isdon", "mysql", "mysql");
 
             Statement stmt = connection.createStatement();
-            ResultSet executeQuery = stmt.executeQuery("SELECT * FROM `orders` limit 1000");
+            ResultSet executeQuery = stmt.executeQuery("SELECT * FROM `orders` limit 50000");
             out.println("{");
 
             while (executeQuery.next()) {
@@ -32,7 +32,7 @@ public class ServletOrders extends HttpServlet {
                 out.print( "\"id\" : \"" + executeQuery.getString("id") + "\"" +
                         ", \"don_session_id\" : \"" + executeQuery.getString("don_session_id") + "\"" +
                         ", \"client_id\" : \"" + executeQuery.getString("client_id") + "\"" +
-                        "\",  \"created_at\" : \"" + executeQuery.getString("created_at") + "\"}");
+                        ",  \"created_at\" : \"" + executeQuery.getString("created_at") + "\"}");
 
                 if (!executeQuery.isLast()) {
                     out.print(", ");
