@@ -29,17 +29,38 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in data">
-                    <th scope="row">{{ item.id }}</th>
+                <tr v-for="user in users">
+                    <th scope="row">{{ user.id }}</th>
                     <td>
-                        <a v-bind:href="'ServletUser?id=' + item.id">{{ item.name }}</a>
+                        <a v-bind:href="'ServletUser?id=' + user.id">{{ user.name }}</a>
                     </td>
-                    <td>{{ item.email }}</td>
+                    <td>{{ user.email }}</td>
                 </tr>
                 </tbody>
             </table>
-
         </div>
+
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">session</th>
+                    <th scope="col">client_id</th>
+                    <th scope="col">created_at</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="order in orders">
+                    <th scope="row">{{ order.id }}</th>
+                    <td>{{ order.don_session_id }}</td>
+                    <td>{{ order.client_id }}</td>
+                    <td>{{ order.created_at }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
 
@@ -47,16 +68,27 @@
     var vue = new Vue({
         el: '#app',
         data: {
-            data : {},
+            users : {},
+            orders : {},
         },
         created() {
-            this.getData();
+           // this.getUsers();
+            this.getOrders();
         },
         methods: {
-            getData() {
+            getUsers() {
                 axios.get('ServletUsers')
                     .then(response => {
-                        this.data = response.data;
+                        this.users = response.data;
+                    })
+                    .catch(response => {
+                        alert('fail')
+                    });
+            },
+            getOrders() {
+                axios.get('ServletOrders')
+                    .then(response => {
+                        this.orders = response.data;
                     })
                     .catch(response => {
                         alert('fail')
